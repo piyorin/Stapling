@@ -6,6 +6,8 @@ public class Needle : MonoBehaviour
 {
     private static string prefabPath = "Prefabs/Needle";
 
+    private GameObject needle;
+
     // 当たり判定
     private static float range = 50;
 
@@ -19,11 +21,20 @@ public class Needle : MonoBehaviour
     /// <returns>生成した針のNeedleクラス</returns>
     public static Needle instance(Vector2 position)
     {
-        Debug.Log(string.Format("針が生成された。x:{0} y:{1}", position.x, position.y));
         GameObject instance = Instantiate((GameObject)Resources.Load(prefabPath));
         Needle script = (Needle)instance.GetComponent(typeof(Needle).Name);
+        script.needle = instance;
         script.position = position;
+        Debug.Log(string.Format("針が生成された。x:{0} y:{1}", position.x, position.y));
         return script;
+    }
+
+    /// <summary>
+    /// 針を抜く
+    /// </summary>
+    public void pull()
+    {
+        Destroy(needle);
     }
 
     /// <summary>
